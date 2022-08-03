@@ -19,7 +19,7 @@ def contato():
 def usuarios():
     return render_template('usuarios.html', user_list=user_list)
 
-@app.route("/login")
+@app.route("/login", methods=['GET','POST'])
 def login():
     form_login = FormLogin()
     form_criar_conta = FormCriarConta()
