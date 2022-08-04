@@ -2,6 +2,8 @@ from flask import render_template, redirect, url_for, flash, request
 from community import app, database, bcrypt
 from community.forms import FormLogin, FormCriarConta
 from community.models import Usuario
+from flask_login import login_user
+
 
 user_list = ['Renato', 'Tatiana', 'Valentina']
 
@@ -22,8 +24,13 @@ def login():
     form_login = FormLogin()
     form_criar_conta = FormCriarConta()
     if form_login.validate_on_submit() and 'submit_login' in request.form:
-        flash(f'Login feito com sucesso para o e-mail: {form_login.email.data}', 'alert-success')
-        return redirect(url_for('home'))
+        usuario = Usuario.query.filter_by(email=form_login.email.data).first()
+        if usuario and bcrypt.check_password_hash(usuario.senha, form_login.senha.data):
+            login_user(usuario, remember=form_login.lembrar.data)
+            flash(f'Login feito com sucesso para o e-mail: {form_login.email.data}', 'alert-success')
+            return redirect(url_for('home'))
+        else:
+            flash(f'Falha ao realizar o login. E-mail ou senha inválidos', 'alert-danger')
     if form_criar_conta.validate_on_submit() and 'submit_criar_conta' in request.form:
         senha_cript = bcrypt.generate_password_hash(form_criar_conta.senha.data)
         usuario = Usuario(username=form_criar_conta.username.data,
