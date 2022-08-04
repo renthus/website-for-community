@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, flash, request
 from community import app, database, bcrypt
 from community.forms import FormLogin, FormCriarConta
 from community.models import Usuario
-from flask_login import login_user
+from flask_login import login_user, logout_user, current_user, login_required
 
 
 user_list = ['Renato', 'Tatiana', 'Valentina']
@@ -16,6 +16,7 @@ def contato():
     return render_template('contato.html')
 
 @app.route("/usuarios")
+@login_required
 def usuarios():
     return render_template('usuarios.html', user_list=user_list)
 
@@ -28,7 +29,11 @@ def login():
         if usuario and bcrypt.check_password_hash(usuario.senha, form_login.senha.data):
             login_user(usuario, remember=form_login.lembrar.data)
             flash(f'Login feito com sucesso para o e-mail: {form_login.email.data}', 'alert-success')
-            return redirect(url_for('home'))
+            par_next = request.args.get('next')
+            if par_next:
+                return redirect(par_next)
+            else:
+                return redirect(url_for('home'))
         else:
             flash(f'Falha ao realizar o login. E-mail ou senha inválidos', 'alert-danger')
     if form_criar_conta.validate_on_submit() and 'submit_criar_conta' in request.form:
@@ -41,3 +46,21 @@ def login():
         flash(f'Conta criada para o e-mail: {form_criar_conta.email.data}', 'alert-success')
         return redirect(url_for('home'))
     return render_template('login.html', form_login=form_login, form_criar_conta=form_criar_conta)
+
+
+@app.route('/sair')
+@login_required
+def sair():
+    logout_user()
+    flash(f'Logout realizado com sucesso!', 'alert-success')
+    return redirect(url_for('home'))
+
+@app.route('/perfil')
+@login_required
+def perfil():
+    return render_template('perfil.html')
+
+@app.route('/post/criar')
+@login_required
+def criar_post():
+    return render_template('criarpost.html')
