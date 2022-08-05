@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for, flash, request
 from community import app, database, bcrypt
-from community.forms import FormLogin, FormCriarConta
+from community.forms import FormLogin, FormCriarConta, FormEditarPerfil
 from community.models import Usuario
 from flask_login import login_user, logout_user, current_user, login_required
 
@@ -65,3 +65,19 @@ def perfil():
 @login_required
 def criar_post():
     return render_template('criarpost.html')
+
+@app.route('/perfil/editar', methods=['GET','POST'])
+@login_required
+def editar_perfil():
+    form = FormEditarPerfil()
+    if form.validate_on_submit():
+        current_user.email = form.email.data
+        current_user.username = form.username.data
+        database.session.commit()
+        flash('Perfil atualizado com sucesso', 'alert-success')
+        return redirect(url_for('perfil'))
+    elif request.method == 'GET':
+        form.email.data = current_user.email
+        form.username.data = current_user.username
+    foto_perfil = url_for('static', filename='fotos_perfil/{}'.format(current_user.foto_perfil))
+    return render_template('editarperfil.html', foto_perfil=foto_perfil, form=form)
