@@ -44,6 +44,17 @@
                     {% endfor %}
                   {% endif %}
                 </div>
+                <hr>
+                <p>Habilidades</p>
+                {% for campo in form %}
+                  {% if 'habilidade_' in campo.name %}
+                    <div class="form-group">
+                      {{ campo(class="form-check-input") }}
+                      {{ campo.label(class="form-check-input-label") }}
+                    </div>
+                  {% endif %}
+                {% endfor %}
+
               </fieldset><br>
             {{ form.submit_perfil(class="btn btn-primary mt-2") }}
           </form>
