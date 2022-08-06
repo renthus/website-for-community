@@ -2,21 +2,27 @@
 
 {% block body %}
     <div class="container mt-3">
-        <h1 style="color: red">Comunidade | Devs</h1>
+        <h1 style="color: blue">Comunidade | Devs</h1>
         <h2>Desenvolvimento de um projeto para uma comunidade de desenvolvedores!</h2>
         <hr>
         {% for post in posts %}
         <div class="row border mt-4 p-2 meupost">
             <div class="col col-3">
                 <div class="image pe-2">
-                    <img src="{{ foto_perfil }}" class="rounded" width="200" >
+                    <img src="{{ url_for('static', filename='fotos_perfil/{}'.format(post.autor.foto_perfil))  }}" class="rounded" width="200" >
+                </div>
+                <strong>{{ post.autor.username }}</strong>
+                <div class="col" style="text-align: left">
+                    {% for habilidade in post.autor.habilidades.split(';') %}
+                    <button type="button" class="btn btn-success mt-2" disabled>{{ habilidade }}</button>
+                    {% endfor %}
                 </div>
             </div>
+
             <div class="col col-9">
                 <h3>{{ post.titulo }}</h3>
                 <p>{{ post.descricao }}</p>
             </div>
-
         </div>
         {% endfor %}
     </div>
