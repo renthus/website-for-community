@@ -36,3 +36,11 @@
 .number3{
     font-weight:500;
 }
+
+.meupost {
+    background: #f2f5f8;
+    border-top-left-radius: .8rem;
+    border-top-right-radius: .8rem;
+    border-bottom-right-radius: .8rem;
+    border-bottom-left-radius: .8rem;
+}

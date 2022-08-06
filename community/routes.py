@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, flash, request
 from community import app, database, bcrypt
-from community.forms import FormLogin, FormCriarConta, FormEditarPerfil
-from community.models import Usuario
+from community.forms import FormLogin, FormCriarConta, FormEditarPerfil, FormCriarPost
+from community.models import Usuario, Post
 from flask_login import login_user, logout_user, current_user, login_required
 import secrets
 import os
@@ -10,7 +10,8 @@ from PIL import Image
 
 @app.route("/")
 def home():
-    return render_template('home.html')
+    posts = Post.query.all()
+    return render_template('home.html', posts=posts)
 
 @app.route("/contato")
 def contato():
@@ -63,10 +64,17 @@ def perfil():
     foto_perfil = url_for('static', filename='fotos_perfil/{}'.format(current_user.foto_perfil))
     return render_template('perfil.html', foto_perfil=foto_perfil)
 
-@app.route('/post/criar')
+@app.route('/post/criar', methods=['GET', 'POST'])
 @login_required
 def criar_post():
-    return render_template('criarpost.html')
+    form = FormCriarPost()
+    if form.validate_on_submit():
+        post = Post(titulo=form.titulo.data, descricao=form.descricao.data, autor=current_user)
+        database.session.add(post)
+        database.session.commit()
+        flash('Post criado com sucesso', 'alert-success')
+        return redirect(url_for('home'))
+    return render_template('criarpost.html', form=form)
 
 def salvar_imagem(imagem):
     codigo = secrets.token_hex(8)
