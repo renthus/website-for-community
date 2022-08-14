@@ -1,4 +1,4 @@
-# Website for Community
+# Website para Comunidades
 
 <p>
    <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=RED&style=for-the-badge"/>
@@ -14,7 +14,7 @@
 
 - [Acesso ao projeto](#acesso-ao-projeto)
 
-- [Acesso ao deploy do projeto](#Acesso ao deploy do projeto)
+- [Acesso ao deploy do projeto](#acesso-ao-deploy-do-projeto)
 
 - [Desenvolvedores](#desenvolvedores)
 
@@ -23,19 +23,19 @@
 <p align="justify">
 Desenvolvimento Full Stack de um site para usuários de uma comunidade publicar suas postagens.
    
-![Site para comunidades](https://user-images.githubusercontent.com/49447595/184302853-f9bda5ad-6fe0-4578-9c3b-9806c90003dd.PNG)
+![site para comunidades](https://user-images.githubusercontent.com/49447595/184559297-463669dd-18c8-4107-bcba-517f9fd28f05.PNG)
    
 </p>
 
 ## Funcionalidades
 
-:heavy_check_mark: `Funcionalidade 1:`Homepage contendo postagens de usuários.
+:heavy_check_mark: `Funcionalidade 1:` Homepage contendo postagens de usuários.
 
-:heavy_check_mark: `Funcionalidade 2:`Página Criação de conta para o cadastramento do usuário.
+:heavy_check_mark: `Funcionalidade 2:` Página Criação de conta para o cadastramento do usuário.
 
-:heavy_check_mark: `Funcionalidade 3:`Página de Login para o usuário realizar o login no site.
+:heavy_check_mark: `Funcionalidade 3:` Página de Login para o usuário realizar o login no site.
 
-:heavy_check_mark: `Funcionalidade 4:`Página Contato contendo as informações para contato.
+:heavy_check_mark: `Funcionalidade 4:` Página Contato contendo as informações para contato.
 
 ## Tecnologias utilizadas
 <p>
